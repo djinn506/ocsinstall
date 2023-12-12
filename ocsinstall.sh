@@ -1,10 +1,15 @@
 #!/bin/bash
 
+## ejemplo: ./ocsinstall aula2 ## defino tag con el resto de las opciones por defecto
+## ejemplo: ./ocsinstall aula2 2.10.0 ## defino tag y version con el resto de las opciones por defecto
+## ejemplo: ./ocsinstall aula2 2.10.0 admin admin ## defino tag, version y login con el resto de las opciones por defecto
+## ejemplo: ./ocsinstall aula2 2.10.0 admin admin ocsglpi.unicen.edu.ar ## defino todas las opciones
+
 TAG="${1:-"aula"}"  # defino tag default si recibo nada por argumento
-URL="${2:-"ocsglpi.unicen.edu.ar"}"  # defino ip default si recibo nada por argumento
-VERSION="${3:-"2.10.0"}"  # defino version default si recibo nada por argumento
-OCSUSER="${4:-"admin"}"  # defino usuario default si recibo nada por argumento
-OCSPASS="${5:-"admin"}"  # defino password default si recibo nada por argumento
+VERSION="${2:-"2.10.0"}"  # defino version default si recibo nada por argumento
+OCSUSER="${3:-"admin"}"  # defino usuario default si recibo nada por argumento
+OCSPASS="${4:-"admin"}"  # defino password default si recibo nada por argumento
+URL="${5:-"ocsglpi.unicen.edu.ar"}"  # defino ip default si recibo nada por argumento
 
 function descargarOCS(){
    wget https://www.github.com/OCSInventory-NG/UnixAgent/releases/download/v$VERSION/Ocsinventory-Unix-Agent-$VERSION.tar.gz
