@@ -22,7 +22,7 @@ function instalarDep(){
    sudo apt install libxml-simple-perl -y
 }
 
-#Paquetes necesarios
+#Instalo Paquetes necesarios
 if instalarDep; then
    >&2 printf 'ERROR: Fallo Instalación de dependencias\n'
    else
@@ -30,7 +30,7 @@ if instalarDep; then
 fi
 
 buscarTar;
-## Busco .tar.gz ##
+## Descargo .tar.gz ##
 if ! [ -e "$FILE".tar.gz ]; then
    printf 'OcsInventory.tar.gz no encontrado, Descargando...\n'
    if ! descargarOCS ; then
