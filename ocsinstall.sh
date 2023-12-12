@@ -1,9 +1,10 @@
 #!/bin/bash
 
-URL="${1:-"ocsglpi.unicen.edu.ar"}"  # defino ip default si recibo nada por argumento
-VERSION="${2:-"2.10.0"}"  # defino version default si recibo nada por argumento
-OCSUSER="${3:-"admin"}"  # defino usuario default si recibo nada por argumento
-OCSPASS="${4:-"admin"}"  # defino password default si recibo nada por argumento
+TAG="${1:-"aula"}"  # defino tag default si recibo nada por argumento
+URL="${2:-"ocsglpi.unicen.edu.ar"}"  # defino ip default si recibo nada por argumento
+VERSION="${3:-"2.10.0"}"  # defino version default si recibo nada por argumento
+OCSUSER="${4:-"admin"}"  # defino usuario default si recibo nada por argumento
+OCSPASS="${5:-"admin"}"  # defino password default si recibo nada por argumento
 
 function descargarOCS(){
    wget https://www.github.com/OCSInventory-NG/UnixAgent/releases/download/v$VERSION/Ocsinventory-Unix-Agent-$VERSION.tar.gz
@@ -14,10 +15,11 @@ function buscarTar(){
 }
 
 function instalarDep(){
-   sudo apt-get install perl libxml-simple-perl libdigest-md5-perl libxml-simple-perl libnet-ip-perl \
+   sudo apt-get install perl libdigest-md5-perl libxml-simple-perl libnet-ip-perl \
    libwww-perl libmac-sysprofile-perl libcrypt-ssleay-perl liblwp-protocol-https-perl libnet-snmp-perl \
    libnet-netmask-perl libnet-ping-perl libnmap-parser-perl libdata-uuid-perl libparse-edid-perl \
    libproc-daemon-perl libproc-pid-file-perl -y
+   sudo apt install libxml-simple-perl -y
 }
 
 #Paquetes necesarios
@@ -27,8 +29,8 @@ if instalarDep; then
       printf 'Instalación de dependencias completa\n'
 fi
 
-## Busco .tar.gz ##
 buscarTar;
+## Busco .tar.gz ##
 if ! [ -e "$FILE".tar.gz ]; then
    printf 'OcsInventory.tar.gz no encontrado, Descargando...\n'
    if ! descargarOCS ; then
@@ -39,14 +41,10 @@ if ! [ -e "$FILE".tar.gz ]; then
    fi
 fi
 
+buscarTar;
 ## Extraigo ##
 if ! [ -d "$FILE" ]; then
-   if ! tar -xvzf "$FILE.tar.gz"; then
-      >&2 printf 'ERROR: Fallo Extracción\n'
-      exit 4
-      else
-         printf 'Extracción Completa\n'
-   fi
+   tar -xvzf "$FILE.tar.gz"
 fi
 
 cd "$FILE" || exit
@@ -54,7 +52,7 @@ cd "$FILE" || exit
 ## Compilar y Correr ##
 if PERL_AUTOINSTALL=1 perl Makefile.PL; then
    printf 'OCS se compiló correctamente\n'
-   if sudo ./ocsinventory-agent --devlib --server http://$URL/ocsinventory --user=$OCSUSER --password=$OCSPASS; then
+   if sudo ./ocsinventory-agent --devlib --server http://$URL/ocsinventory --user=$OCSUSER --password=$OCSPASS --tag=$TAG; then
       printf 'Se enviaron los datos correctamente\n'
       else
          >&2 printf 'ERROR: No se pudo enviar los datos\n'
