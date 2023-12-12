@@ -20,10 +20,9 @@ function buscarTar(){
 }
 
 function instalarDep(){
-   sudo apt-get install perl libdigest-md5-perl libxml-simple-perl libnet-ip-perl \
-   libwww-perl libmac-sysprofile-perl libcrypt-ssleay-perl liblwp-protocol-https-perl libnet-snmp-perl \
-   libnet-netmask-perl libnet-ping-perl libnmap-parser-perl libdata-uuid-perl libparse-edid-perl \
-   libproc-daemon-perl libproc-pid-file-perl -y
+   sudo apt-get install perl libdigest-md5-perl libnet-ip-perl libwww-perl libmac-sysprofile-perl libcrypt-ssleay-perl\
+   liblwp-protocol-https-perl libnet-snmp-perl libnet-netmask-perl libnet-ping-perl libnmap-parser-perl\
+   libdata-uuid-perl libparse-edid-perl libproc-daemon-perl libproc-pid-file-perl -y\
    sudo apt install libxml-simple-perl -y
 }
 
