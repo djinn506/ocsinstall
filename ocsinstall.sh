@@ -45,6 +45,8 @@ if ! [ -e "$FILE".tar.gz ]; then
    fi
 fi
 
+sleep 2 # espero que se descargue, sino puede empezar a extraer sin tener el archivo
+
 buscarTar;
 ## Extraigo ##
 if ! [ -d "$FILE" ]; then
